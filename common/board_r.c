@@ -939,6 +939,7 @@ static init_fnc_t init_sequence_r[] = {
 
 void board_init_r(gd_t *new_gd, ulong dest_addr)
 {
+	debug("ATB DBG uboot: %s\n", __func__);
 	/*
 	 * Set up the new global data pointer. So far only x86 does this
 	 * here.

@@ -39,7 +39,7 @@ static ulong spl_romapi_read_seekable(struct spl_load_info *load,
 
 	offset = sector * pagesize;
 
-	debug("ROM API load from 0x%x, size 0x%x\n", offset, (u32)byte);
+	debug("ROM API load from 0x%x, size 0x%x\n\n", offset, (u32)byte);
 
 	ret = g_rom_api->download_image(buf, offset, byte,
 					((uintptr_t)buf) ^ offset ^ byte);
@@ -48,7 +48,7 @@ static ulong spl_romapi_read_seekable(struct spl_load_info *load,
 	if (ret == ROM_API_OKAY)
 		return count;
 
-	printf("ROM API Failure when load 0x%x\n", offset);
+	printf("ROM API Failure when load 0x%x\n\n", offset);
 
 	return 0;
 }
@@ -279,7 +279,7 @@ int board_return_to_bootrom(struct spl_image_info *spl_image,
 	volatile gd_t *pgd = gd;
 	int ret;
 	u32 boot;
-
+	debug("ATB DBG %s\n", __func__);
 	ret = g_rom_api->query_boot_infor(QUERY_BT_DEV, &boot,
 					  ((uintptr_t)&boot) ^ QUERY_BT_DEV);
 	gd =  pgd;

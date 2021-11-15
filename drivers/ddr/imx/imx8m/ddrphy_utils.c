@@ -71,7 +71,7 @@ static inline unsigned int get_stream_message(void)
 
 static inline void decode_major_message(unsigned int mail)
 {
-	debug("[PMU Major message = 0x%08x]\n", mail);
+//	debug("[PMU Major message = 0x%08x]\n", mail);
 }
 
 static inline void decode_streaming_message(void)

@@ -67,6 +67,7 @@ int lists_bind_drivers(struct udevice *parent, bool pre_reloc_only)
 			if (!result || ret != -ENOENT)
 				result = ret;
 		}
+		dm_warn("ATB: %s %s\n", __func__, entry->name);
 	}
 
 	return result;

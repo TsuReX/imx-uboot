@@ -5,10 +5,12 @@
 
 #include <common.h>
 #include <spl.h>
+#include <log.h>
 
 __weak int board_return_to_bootrom(struct spl_image_info *spl_image,
 				   struct spl_boot_device *bootdev)
 {
+	debug("ATB DBG %s\n", __func__);
 	return 0;
 }
 

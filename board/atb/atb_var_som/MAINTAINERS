@@ -1,0 +1,6 @@
+i.MX8MP EVK BOARD
+M:	Peng Fan <peng.fan@nxp.com>
+S:	Maintained
+F:	board/atb/var_som/
+F:	include/configs/atb_var_som.h
+F:	configs/atb_var_som_defconfig

@@ -119,23 +119,6 @@ relocation_return:
  * Set up final (full) environment
  */
 	bl	c_runtime_cpu_setup		/* still call old routine */
-#endif /* !CONFIG_SPL_BUILD */
-#if !defined(CONFIG_SPL_BUILD) || CONFIG_IS_ENABLED(FRAMEWORK)
-#if defined(CONFIG_SPL_BUILD)
-	bl	spl_relocate_stack_gd           /* may return NULL */
-	/* set up gd here, outside any C code, if new stack is returned */
-	cmp	x0, #0
-	csel	x18, x0, x18, ne
-	/*
-	 * Perform 'sp = (x0 != NULL) ? x0 : sp' while working
-	 * around the constraint that conditional moves can not
-	 * have 'sp' as an operand
-	 */
-	mov	x1, sp
-	cmp	x0, #0
-	csel	x0, x0, x1, ne
-	mov	sp, x0
-#endif
 
 /*
  * Clear BSS section
@@ -153,6 +136,5 @@ clear_loop:
 	b	board_init_r			/* PC relative jump */
 
 	/* NOTREACHED - board_init_r() does not return */
-#endif
-
+#endif /* !CONFIG_SPL_BUILD */
 ENDPROC(_main)

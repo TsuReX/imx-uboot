@@ -28,7 +28,6 @@
 #include <fdt_support.h>
 #include <bootcount.h>
 #include <wdt.h>
-
 DECLARE_GLOBAL_DATA_PTR;
 
 #ifndef CONFIG_SYS_UBOOT_START
@@ -518,10 +517,12 @@ int spl_init(void)
 __weak void board_boot_order(u32 *spl_boot_list)
 {
 	spl_boot_list[0] = spl_boot_device();
+	debug("ATB DBG %s spl_boot_device %d\n", __func__, spl_boot_list[0]);
 }
 
 static struct spl_image_loader *spl_ll_find_loader(uint boot_device)
 {
+	debug("ATB DBG %s boot_device %d\n", __func__, boot_device);
 	struct spl_image_loader *drv =
 		ll_entry_start(struct spl_image_loader, spl_image_loader);
 	const int n_ents =
@@ -547,6 +548,8 @@ static int spl_load_image(struct spl_image_info *spl_image,
 	bootdev.boot_device_name = NULL;
 
 	ret = loader->load_image(spl_image, &bootdev);
+	debug("ATB DBG %s spl_image->load_addr 0x%08lx\n", __func__, spl_image->load_addr);
+	debug("ATB DBG %s spl_image->os 0x%08x\n", __func__, (uint32_t)spl_image->os);
 #ifdef CONFIG_SPL_LEGACY_IMAGE_CRC_CHECK
 	if (!ret && spl_image->dcrc_length) {
 		/* check data crc */
@@ -573,7 +576,7 @@ static int boot_from_devices(struct spl_image_info *spl_image,
 			     u32 spl_boot_list[], int count)
 {
 	int i;
-
+	debug("ATB DBG %s spl_image->load_addr 0x%08lx\n", __func__, spl_image->load_addr);
 	for (i = 0; i < count && spl_boot_list[i] != BOOT_DEVICE_NONE; i++) {
 		struct spl_image_loader *loader;
 
@@ -622,7 +625,7 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 	};
 	struct spl_image_info spl_image;
 	int ret;
-
+	debug("ATB DBG: %s\n", __func__);
 	debug(">>" SPL_TPL_PROMPT "board_init_r()\n");
 
 	spl_set_bd();
@@ -689,6 +692,8 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 	}
 
 	spl_perform_fixups(&spl_image);
+	debug("ATB DBG %s spl_image->load_addr 0x%08lx\n", __func__, spl_image.load_addr);
+	debug("ATB DBG %s spl_image->os 0x%08x\n", __func__, (uint32_t)spl_image.os);
 	if (CONFIG_IS_ENABLED(HANDOFF)) {
 		ret = write_spl_handoff();
 		if (ret)
@@ -753,6 +758,8 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 
 	debug("loaded - jumping to U-Boot...\n");
 	spl_board_prepare_for_boot();
+	debug("ATB DBG %s spl_image->load_addr 0x%08lx\n", __func__, spl_image.load_addr);
+	debug("ATB DBG %s spl_image->os 0x%08x\n", __func__, (uint32_t)spl_image.os);
 	jump_to_image_no_args(&spl_image);
 }
 
@@ -821,6 +828,7 @@ __weak void spl_relocate_stack_check(void)
  */
 ulong spl_relocate_stack_gd(void)
 {
+	debug("ATB DBG: %s\n", __func__);
 #ifdef CONFIG_SPL_STACK_R
 	gd_t *new_gd;
 	ulong ptr = CONFIG_SPL_STACK_R_ADDR;

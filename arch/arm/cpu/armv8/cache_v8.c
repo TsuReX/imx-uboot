@@ -110,7 +110,7 @@ static u64 *find_pte(u64 addr, int level)
 	u64 va_bits;
 	int i;
 
-	debug("addr=%llx level=%d\n", addr, level);
+//	debug("addr=%llx level=%d\n", addr, level);
 
 	get_tcr(0, NULL, &va_bits);
 	if (va_bits < 39)
@@ -124,7 +124,7 @@ static u64 *find_pte(u64 addr, int level)
 	for (i = start_level; i < 4; i++) {
 		idx = (addr >> level2shift(i)) & 0x1FF;
 		pte += idx;
-		debug("idx=%llx PTE %p at level %d: %llx\n", idx, pte, i, *pte);
+//		debug("idx=%llx PTE %p at level %d: %llx\n", idx, pte, i, *pte);
 
 		/* Found it */
 		if (i == level)
@@ -214,7 +214,7 @@ static void add_map(struct mm_region *map)
 	while (size) {
 		pte = find_pte(virt, 0);
 		if (pte && (pte_type(pte) == PTE_TYPE_FAULT)) {
-			debug("Creating table for virt 0x%llx\n", virt);
+//			debug("Creating table for virt 0x%llx\n", virt);
 			new_table = create_table();
 			set_pte_table(pte, new_table);
 		}
@@ -225,12 +225,12 @@ static void add_map(struct mm_region *map)
 				panic("pte not found\n");
 
 			blocksize = 1ULL << level2shift(level);
-			debug("Checking if pte fits for virt=%llx size=%llx blocksize=%llx\n",
-			      virt, size, blocksize);
+//			debug("Checking if pte fits for virt=%llx size=%llx blocksize=%llx\n",
+//			      virt, size, blocksize);
 			if (size >= blocksize && !(virt & (blocksize - 1))) {
 				/* Page fits, create block PTE */
-				debug("Setting PTE %p to block virt=%llx\n",
-				      pte, virt);
+//				debug("Setting PTE %p to block virt=%llx\n",
+//				      pte, virt);
 				if (level == 3)
 					*pte = phys | attrs | PTE_TYPE_PAGE;
 				else
@@ -241,13 +241,13 @@ static void add_map(struct mm_region *map)
 				break;
 			} else if (pte_type(pte) == PTE_TYPE_FAULT) {
 				/* Page doesn't fit, create subpages */
-				debug("Creating subtable for virt 0x%llx blksize=%llx\n",
-				      virt, blocksize);
+//				debug("Creating subtable for virt 0x%llx blksize=%llx\n",
+//				      virt, blocksize);
 				new_table = create_table();
 				set_pte_table(pte, new_table);
 			} else if (pte_type(pte) == PTE_TYPE_BLOCK) {
-				debug("Split block into subtable for virt 0x%llx blksize=0x%llx\n",
-				      virt, blocksize);
+//				debug("Split block into subtable for virt 0x%llx blksize=0x%llx\n",
+//				      virt, blocksize);
 				split_block(pte, level);
 			}
 		}

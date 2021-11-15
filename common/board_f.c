@@ -799,6 +799,7 @@ static int jump_to_copy(void)
 /* Record the board_init_f() bootstage (after arch_cpu_init()) */
 static int initf_bootstage(void)
 {
+	debug("ATB DBG: %s\n", __func__);
 	bool from_spl = IS_ENABLED(CONFIG_SPL_BOOTSTAGE) &&
 			IS_ENABLED(CONFIG_BOOTSTAGE_STASH);
 	int ret;
@@ -872,6 +873,12 @@ __weak int clear_bss(void)
 	return 0;
 }
 
+static int print_dbg(void)
+{
+	debug("ATB DBG: %s\n", __func__);
+	return 0;
+}
+
 static const init_fnc_t init_sequence_f[] = {
 	setup_mon_len,
 #ifdef CONFIG_OF_CONTROL
@@ -896,6 +903,7 @@ static const init_fnc_t init_sequence_f[] = {
 	initf_dm,
 	arch_cpu_init_dm,
 #if defined(CONFIG_BOARD_EARLY_INIT_F)
+	print_dbg,
 	board_early_init_f,
 #endif
 #if defined(CONFIG_PPC) || defined(CONFIG_SYS_FSL_CLK) || defined(CONFIG_M68K)
@@ -912,8 +920,10 @@ static const init_fnc_t init_sequence_f[] = {
 	init_baud_rate,		/* initialze baudrate settings */
 #ifndef CONFIG_ANDROID_AUTO_SUPPORT
 	serial_init,		/* serial communications setup */
+	print_dbg,
 #endif
 	console_init_f,		/* stage 1 init of console */
+	print_dbg,
 	display_options,	/* say that we are here */
 	display_text_info,	/* show debugging info if required */
 	checkcpu,
@@ -1022,7 +1032,7 @@ void board_init_f(ulong boot_flags)
 {
 	gd->flags = boot_flags;
 	gd->have_console = 0;
-
+	debug("ATB DBG uboot: %s\n", __func__);
 	if (initcall_run_list(init_sequence_f))
 		hang();
 

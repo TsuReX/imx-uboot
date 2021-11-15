@@ -1,0 +1,10 @@
+if TARGET_ATB_VAR_SOM
+
+config SYS_VENDOR
+	string
+	default "atb"
+
+config SYS_BOARD
+	default "atb_var_som"
+
+endif

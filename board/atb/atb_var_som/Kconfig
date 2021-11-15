@@ -1,0 +1,14 @@
+if TARGET_ATB_VAR_SOM
+
+config SYS_BOARD
+	default "atb_var_som"
+
+config SYS_VENDOR
+	default "atb"
+
+config SYS_CONFIG_NAME
+	default "atb_var_som"
+
+source "board/freescale/common/Kconfig"
+
+endif

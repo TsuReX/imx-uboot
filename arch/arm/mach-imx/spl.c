@@ -297,6 +297,7 @@ __weak void __noreturn jump_to_image_no_args(struct spl_image_info *spl_image)
 	image_entry_noargs_t image_entry =
 		(image_entry_noargs_t)(unsigned long)spl_image->entry_point;
 
+	debug("ATB DBG %s spl_image->entry_point 0x%08lX\n", __func__, spl_image->entry_point);
 	debug("image entry point: 0x%lX\n", spl_image->entry_point);
 
 	if (spl_image->flags & SPL_FIT_FOUND) {
