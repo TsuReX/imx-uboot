@@ -12,7 +12,7 @@
 //	model = "NXP i.MX8MPlus LPDDR4 EVK board";
 	model = "ATB i.MX8MPlus LPDDR4 VAR-SOM board";
 //	compatible = "fsl,imx8mp-evk", "fsl,imx8mp";
-	compatible = "fsl,atb-var-som", "fsl,imx8mp";
+	compatible = "atb,atb-var-som", "fsl,imx8mp";
 
 	chosen {
 		bootargs = "console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200";
@@ -21,8 +21,8 @@
 
 	memory@40000000 {
 		device_type = "memory";
-		reg = <0x0 0x40000000 0 0xc0000000>,
-			  <0x1 0x00000000 0 0xc0000000>;
+		reg = <0x00000000 0x40000000 0x00000000 0xc0000000>,
+			  <0x00000001 0x00000000 0x00000001 0x40000000>;
 	};
 
 	leds {
@@ -44,7 +44,7 @@
 		pinctrl-0 = <&pinctrl_usb1_vbus>;
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
-		gpio = <&gpio1 14 GPIO_ACTIVE_HIGH>;
+		gpio = <&gpio2 14 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 		regulator-always-on;
 	};
@@ -79,7 +79,8 @@
 					 */
 		panel-width-mm = <68>;
 		panel-height-mm = <121>;
-		status = "okay";
+//		status = "okay";
+		status = "disabled";
 
 		port {
 			rm67191_from_dsim: endpoint {
@@ -94,7 +95,8 @@
 	pinctrl-0 = <&pinctrl_eqos>;
 	phy-mode = "rgmii-id";
 	phy-handle = <&ethphy0>;
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 
 	mdio {
 		compatible = "snps,dwmac-mdio";
@@ -115,7 +117,8 @@
 	phy-mode = "rgmii-id";
 	phy-handle = <&ethphy1>;
 	fsl,magic-packet;
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 
 	mdio {
 		#address-cells = <1>;
@@ -132,7 +135,8 @@
 &flexspi {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_flexspi0>;
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 
 	flash0: mt25qu256aba@0 {
 		reg = <0>;
@@ -304,11 +308,13 @@
 };
 
 &lcdif1 {
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 };
 
 &mipi_dsi {
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 
 	port@1 {
 		dsim_to_adv7535: endpoint {
@@ -335,7 +341,8 @@
 };
 
 &usb3_phy0 {
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 };
 
 &usb_dwc3_0 {
@@ -344,24 +351,31 @@
 	srp-disable;
 	adp-disable;
 	usb-role-switch;
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 };
 
 &usb3_phy1 {
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 };
 
 &usb_dwc3_1 {
 	dr_mode = "host";
-	status = "okay";
+//	status = "okay";
+	status = "disabled";
 };
 
 &usdhc2 {
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
-	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
-	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
-	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
-	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
+//	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
+//	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
+//	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
+	pinctrl-0 = <&pinctrl_usdhc2>;
+	pinctrl-1 = <&pinctrl_usdhc2_100mhz>;
+	pinctrl-2 = <&pinctrl_usdhc2_200mhz>;
+//	cd-gpios = <&gpio1 14 GPIO_ACTIVE_LOW>;
+	non-removable;
 	vmmc-supply = <&reg_usdhc2_vmmc>;
 	bus-width = <4>;
 	status = "okay";
