@@ -341,29 +341,42 @@
 };
 
 &usb3_phy0 {
-//	status = "okay";
+#if 1
+	status = "okay";
+#else
 	status = "disabled";
+#endif
 };
 
 &usb_dwc3_0 {
-	dr_mode = "otg";
+	dr_mode = "peripheral";
+//	dr_mode = "otg";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
 	usb-role-switch;
-//	status = "okay";
+#if 1
+	status = "okay";
+#else
 	status = "disabled";
+#endif
 };
 
 &usb3_phy1 {
-//	status = "okay";
+#if 1
+	status = "okay";
+#else
 	status = "disabled";
+#endif
 };
 
 &usb_dwc3_1 {
 	dr_mode = "host";
-//	status = "okay";
+#if 1
+	status = "okay";
+#else
 	status = "disabled";
+#endif
 };
 
 &usdhc2 {

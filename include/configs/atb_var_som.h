@@ -157,6 +157,8 @@
 			"fi; " \
 		"fi;\0"
 
+#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
+/*
 #define CONFIG_BOOTCOMMAND \
 	   "mmc dev ${mmcdev}; if mmc rescan; then " \
 		   "if run loadbootscript; then " \
@@ -168,6 +170,7 @@
 			   "fi; " \
 		   "fi; " \
 	   "fi;"
+*/
 #endif
 
 /* Link Definitions */
