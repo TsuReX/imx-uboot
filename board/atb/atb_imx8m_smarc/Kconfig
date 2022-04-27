@@ -1,0 +1,14 @@
+if TARGET_ATB_IMX8M_SMARC
+
+config SYS_BOARD
+	default "atb_imx8m_smarc"
+
+config SYS_VENDOR
+	default "atb"
+
+config SYS_CONFIG_NAME
+	default "atb_imx8m_smarc"
+
+source "board/freescale/common/Kconfig"
+
+endif

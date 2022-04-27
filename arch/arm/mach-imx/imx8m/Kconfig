@@ -119,9 +119,14 @@ config TARGET_IMX8MP_EVK
 	select IMX8M_LPDDR4
 
 config TARGET_ATB_VAR_SOM
-	bool "imx8mp Variscite SOM board"
+	bool "imx8mp ATB SOM board"
 	select IMX8MP
 	select SUPPORT_SPL
+	select IMX8M_LPDDR4
+	
+config TARGET_ATB_IMX8M_SMARC
+	bool "imx8m ATB SMARC board"
+	select IMX8MQ
 	select IMX8M_LPDDR4
 
 config TARGET_IMX8MP_DDR4_EVK
@@ -163,6 +168,7 @@ config TARGET_VERDIN_IMX8MM
 endchoice
 
 source "board/atb/atb_var_som/Kconfig"
+source "board/atb/atb_imx8m_smarc/Kconfig"
 source "board/freescale/imx8mq_evk/Kconfig"
 source "board/freescale/imx8mq_val/Kconfig"
 source "board/freescale/imx8mm_ab2/Kconfig"
