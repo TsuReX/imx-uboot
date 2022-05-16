@@ -1,0 +1,14 @@
+if TARGET_ATB_IMX8MP_SOM
+
+config SYS_BOARD
+	default "atb_imx8mp_som"
+
+config SYS_VENDOR
+	default "atb"
+
+config SYS_CONFIG_NAME
+	default "atb_imx8mp_som"
+
+source "board/freescale/common/Kconfig"
+
+endif

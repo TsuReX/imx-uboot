@@ -168,6 +168,7 @@ config TARGET_VERDIN_IMX8MM
 endchoice
 
 source "board/atb/atb_var_som/Kconfig"
+source "board/atb/atb_imx8mp_som/Kconfig"
 source "board/atb/atb_imx8m_smarc/Kconfig"
 source "board/freescale/imx8mq_evk/Kconfig"
 source "board/freescale/imx8mq_val/Kconfig"
