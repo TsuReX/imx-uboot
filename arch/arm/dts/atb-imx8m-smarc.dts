@@ -9,7 +9,7 @@
 #include "imx8mq.dtsi"
 
 / {
-	model = "ATM i.MX8MQ SMARC";
+	model = "ATB i.MX8MQ SMARC";
 	compatible = "atb,atb-imx8m-smarc", "fsl,imx8mq";
 
 	chosen {

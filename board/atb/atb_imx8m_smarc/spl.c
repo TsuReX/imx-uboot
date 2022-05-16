@@ -33,20 +33,8 @@ extern struct dram_timing_info dram_timing_b0;
 static void spl_dram_init(void)
 {
 	/* ddr init */
-	debug("ATB DBG: %s, SOC REV 0x%08X\n", __func__, soc_rev());
+	debug("ATB DEBUG: %s, SOC REV 0x%08X\n", __func__, soc_rev());
 	if (soc_rev() >= CHIP_REV_2_1) {
-
-//		dram_timing.ddrc_cfg[2].val = 0xa3080020;
-//		dram_timing.ddrc_cfg[38].val = 0x17;
-//		/* Training */
-//		dram_timing.fsp_msg[0].fsp_cfg[8].val = 0x310;
-//		dram_timing.fsp_msg[1].fsp_cfg[9].val = 0x310;
-//		dram_timing.fsp_msg[2].fsp_cfg[9].val = 0x310;
-//		dram_timing.fsp_msg[3].fsp_cfg[11].val = 0x310;
-//		dram_timing.fsp_msg[0].fsp_cfg[20].val = 0x3;
-//		dram_timing.fsp_msg[1].fsp_cfg[21].val = 0x3;
-//		dram_timing.fsp_msg[2].fsp_cfg[21].val = 0x3;
-//		dram_timing.fsp_msg[3].fsp_cfg[23].val = 0x3;
 		ddr_init(&dram_timing);
 	} else {
 		ddr_init(&dram_timing_b0);
@@ -120,7 +108,8 @@ static iomux_v3_cfg_t const usdhc2_pads[] = {
 
 static struct fsl_esdhc_cfg usdhc_cfg[2] = {
 	{USDHC1_BASE_ADDR, 0, 8},
-	{USDHC2_BASE_ADDR, 0, 4},
+//	{USDHC2_BASE_ADDR, 0, 4},
+	{USDHC2_BASE_ADDR, 0, 1},
 };
 
 int board_mmc_init(bd_t *bis)
@@ -135,6 +124,7 @@ int board_mmc_init(bd_t *bis)
 	for (i = 0; i < CONFIG_SYS_FSL_USDHC_NUM; i++) {
 		switch (i) {
 		case 0:
+			debug("ATB DEBUG usdhc_cfg has 1bit wide SDIO bus!!!\n");
 			init_clk_usdhc(0);
 			usdhc_cfg[0].sdhc_clk = mxc_get_clock(MXC_ESDHC_CLK);
 			imx_iomux_v3_setup_multiple_pads(usdhc1_pads,
@@ -145,6 +135,7 @@ int board_mmc_init(bd_t *bis)
 			gpio_direction_output(USDHC1_PWR_GPIO, 1);
 			break;
 		case 1:
+			debug("ATB DEBUG usdhc_cfg has 1bit wide SDIO bus!!!\n");
 			init_clk_usdhc(1);
 			usdhc_cfg[1].sdhc_clk = mxc_get_clock(MXC_ESDHC2_CLK);
 			imx_iomux_v3_setup_multiple_pads(usdhc2_pads,
