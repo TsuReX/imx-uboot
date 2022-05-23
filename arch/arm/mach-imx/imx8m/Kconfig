@@ -119,6 +119,12 @@ config TARGET_IMX8MP_EVK
 	select IMX8M_LPDDR4
 
 config TARGET_ATB_VAR_SOM
+	bool "imx8mp ATB VAR SOM board"
+	select IMX8MP
+	select SUPPORT_SPL
+	select IMX8M_LPDDR4
+
+config TARGET_ATB_IMX8MP_SOM
 	bool "imx8mp ATB SOM board"
 	select IMX8MP
 	select SUPPORT_SPL

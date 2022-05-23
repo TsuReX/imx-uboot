@@ -803,8 +803,16 @@ dtb-$(CONFIG_ARCH_IMX8M) += \
 	imx8mn-ddr4-ab2.dtb \
 	imx8mn-ab2.dtb	\
 	atb-var-som.dtb \
-	atb-imx8mp-som.dtb \
+	atb-imx8mp-som-symphony.dtb \
 	atb-imx8m-smarc.dtb \
+	atb-imx8mp-som-voskhod1.dtb
+
+#	TODO: Move the following device trees
+#	atb-imx8mp-som-symphony.dtb
+#	atb-imx8m-smarc.dtb
+#	atb-imx8mp-som-voskhod1.dtb
+#	into separate block being activated by specified targets
+#	ex.  CONFIG_TARGET_ATB_IMX8MP_SOM
 
 dtb-$(CONFIG_ARCH_IMXRT) += imxrt1050-evk.dtb
 

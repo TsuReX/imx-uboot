@@ -158,19 +158,7 @@
 		"fi;\0"
 
 #define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
-/*
-#define CONFIG_BOOTCOMMAND \
-	   "mmc dev ${mmcdev}; if mmc rescan; then " \
-		   "if run loadbootscript; then " \
-			   "run bootscript; " \
-		   "else " \
-			   "if run loadimage; then " \
-				   "run mmcboot; " \
-			   "else run netboot; " \
-			   "fi; " \
-		   "fi; " \
-	   "fi;"
-*/
+
 #endif
 
 /* Link Definitions */
@@ -197,10 +185,10 @@
 /* Size of malloc() pool */
 #define CONFIG_SYS_MALLOC_LEN		SZ_32M
 
-/* Totally 8GB DDR */
+/* Totally 1GB DDR */
 #define CONFIG_SYS_SDRAM_BASE		0x0000000040000000
 #define PHYS_SDRAM					0x0000000040000000
-#define PHYS_SDRAM_SIZE				0x0000000040000000	/* 3 GB */
+#define PHYS_SDRAM_SIZE				0x0000000040000000	/* 1 GB */
 //#define PHYS_SDRAM_2				0x0000000100000000
 //#define PHYS_SDRAM_2_SIZE			0x0000000140000000	/* 5 GB */
 
@@ -254,7 +242,7 @@
 #define CONFIG_CMD_USB
 #define CONFIG_USB_STORAGE
 
-#define CONFIG_CMD_USB_MASS_STORAGE
+//#define CONFIG_CMD_USB_MASS_STORAGE
 #define CONFIG_USB_GADGET_MASS_STORAGE
 #define CONFIG_USB_FUNCTION_MASS_STORAGE
 #endif

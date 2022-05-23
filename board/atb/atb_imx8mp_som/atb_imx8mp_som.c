@@ -518,7 +518,7 @@ int board_late_init(void)
 	board_late_mmc_env_init();
 #endif
 #ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
-	env_set("board_name", "ATB-VAR-SOM");
+	env_set("board_name", "ATB-iMX8MP-SOM");
 	env_set("board_rev", "iMX8MP");
 #endif
 
