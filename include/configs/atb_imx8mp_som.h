@@ -21,7 +21,6 @@
 #define CONFIG_SYS_UBOOT_BASE	(QSPI0_AMBA_BASE + CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR * 512)
 
 #ifdef CONFIG_SPL_BUILD
-#define DEBUG		1
 #define CONFIG_SPL_STACK		0x187FF0
 #define CONFIG_SPL_BSS_START_ADDR      0x0095e000
 #define CONFIG_SPL_BSS_MAX_SIZE        0x2000	/* 8 KB */
@@ -39,7 +38,6 @@
 #define CONFIG_SYS_I2C
 
 #endif
-
 #define CONFIG_CMD_READ
 #define CONFIG_SERIAL_TAG
 #define CONFIG_FASTBOOT_USB_DEV 0
@@ -48,7 +46,7 @@
 /* ENET Config */
 /* ENET1 */
 #if defined(CONFIG_CMD_NET)
-#define CONFIG_ETHPRIME                 "eth1" /* Set eqos to primary since we use its MDIO */
+#define CONFIG_ETHPRIME                 "eth0" /* Set eqos to primary since we use its MDIO */
 
 #define CONFIG_FEC_XCV_TYPE             RGMII
 #define CONFIG_FEC_MXC_PHYADDR          1
@@ -157,7 +155,8 @@
 			"fi; " \
 		"fi;\0"
 
-#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
+//#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
+#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x40480000 linux; fatload mmc 1 0x43000000 dtb; fatload mmc 1 0x43800000 rootfs; booti 0x40480000 0x43800000 0x43000000"
 
 #endif
 

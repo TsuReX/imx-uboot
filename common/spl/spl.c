@@ -517,12 +517,12 @@ int spl_init(void)
 __weak void board_boot_order(u32 *spl_boot_list)
 {
 	spl_boot_list[0] = spl_boot_device();
-	debug("ATB DBG %s spl_boot_device %d\n", __func__, spl_boot_list[0]);
+	debug("ATB DBG %s() spl_boot_device %d\n", __func__, spl_boot_list[0]);
 }
 
 static struct spl_image_loader *spl_ll_find_loader(uint boot_device)
 {
-	debug("ATB DBG %s boot_device %d\n", __func__, boot_device);
+	debug("ATB DBG %s() boot_device %d\n", __func__, boot_device);
 	struct spl_image_loader *drv =
 		ll_entry_start(struct spl_image_loader, spl_image_loader);
 	const int n_ents =
@@ -576,7 +576,7 @@ static int boot_from_devices(struct spl_image_info *spl_image,
 			     u32 spl_boot_list[], int count)
 {
 	int i;
-	debug("ATB DBG %s spl_image->load_addr 0x%08lx\n", __func__, spl_image->load_addr);
+	debug("ATB DBG %s() spl_image->load_addr 0x%08lx\n", __func__, spl_image->load_addr);
 	for (i = 0; i < count && spl_boot_list[i] != BOOT_DEVICE_NONE; i++) {
 		struct spl_image_loader *loader;
 
@@ -627,6 +627,21 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 	int ret;
 	debug("ATB DBG: %s\n", __func__);
 	debug(">>" SPL_TPL_PROMPT "board_init_r()\n");
+
+	uint64_t address = PHYS_SDRAM;
+	uint32_t *ptr;
+	for (; address < PHYS_SDRAM + 1024*1024*128; address += 1024) {
+		ptr = (uint32_t *)address;
+//		debug("ATB DBG: address 0x%08x\n", address);
+		*ptr = 0xFFFFFFFF;
+	}
+
+	for (address = PHYS_SDRAM; address < PHYS_SDRAM + 1024*1024*128; address += 1024) {
+		ptr = (uint32_t *)address;
+		if (*ptr != 0xFFFFFFFF)
+			debug("ATB DBG: address 0x%08x data 0x%08x\n", address, *ptr);
+
+	}
 
 	spl_set_bd();
 

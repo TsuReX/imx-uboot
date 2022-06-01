@@ -73,6 +73,19 @@ struct i2c_pads_info i2c_pad_info1 = {
 	},
 };
 
+struct i2c_pads_info i2c_pads_som = {
+	.scl = {
+		.i2c_mode = MX8MP_PAD_SD1_DATA4__I2C1_SCL | MUX_PAD_CTRL(I2C_PAD_CTRL),
+		.gpio_mode = MX8MP_PAD_SD1_DATA4__GPIO2_IO06 | MUX_PAD_CTRL(I2C_PAD_CTRL),
+		.gp = IMX_GPIO_NR(2, 6),
+	},
+	.sda = {
+		.i2c_mode = MX8MP_PAD_SD1_DATA5__I2C1_SDA | MUX_PAD_CTRL(I2C_PAD_CTRL),
+		.gpio_mode = MX8MP_PAD_SD1_DATA5__GPIO2_IO07 | MUX_PAD_CTRL(I2C_PAD_CTRL),
+		.gp = IMX_GPIO_NR(2, 7),
+	},
+};
+
 #define USDHC2_CD_GPIO	IMX_GPIO_NR(2, 12)
 #define USDHC2_PWR_GPIO IMX_GPIO_NR(2, 19)
 
@@ -177,7 +190,7 @@ int power_init_board(void)
 {
 	struct pmic *p;
 	int ret;
-
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 	ret = power_pca9450b_init(I2C_PMIC);
 	if (ret)
 		printf("power init failed");
@@ -271,7 +284,7 @@ void board_init_f(ulong dummy)
 
 	/* Adjust pmic voltage to 1.0V for 800M */
 	setup_i2c(0, CONFIG_SYS_I2C_SPEED, 0x7f, &i2c_pad_info1);
-
+//	setup_i2c(0, CONFIG_SYS_I2C_SPEED, 0x7f, &i2c_pads_som);
 	power_init_board();
 
 	/* DDR initialization */
