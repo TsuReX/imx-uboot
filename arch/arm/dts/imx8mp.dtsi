@@ -19,8 +19,8 @@
 	#size-cells = <2>;
 
 	aliases {
-		ethernet0 = &fec;
-		ethernet1 = &eqos;
+		ethernet1 = &fec;
+		ethernet0 = &eqos;
 		i2c0 = &i2c1;
 		i2c1 = &i2c2;
 		i2c2 = &i2c3;
@@ -936,7 +936,8 @@
 			};
 
 			eqos: ethernet@30bf0000 {
-				compatible = "nxp,imx8mp-dwmac-eqos", "snps,dwmac-5.10a";
+				//compatible = "nxp,imx8mp-dwmac-eqos", "snps,dwmac-5.10a";
+				compatible = "fsl,imx-eqos";
 				reg = <0x30bf0000 0x10000>;
 				interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
 					     <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;

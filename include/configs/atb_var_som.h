@@ -45,40 +45,13 @@
 #define CONFIG_FASTBOOT_USB_DEV 0
 
 #define CONFIG_REMAKE_ELF
+
 /* ENET Config */
-/* ENET1 */
 #if defined(CONFIG_CMD_NET)
-#define CONFIG_ETHPRIME                 "eth1" /* Set eqos to primary since we use its MDIO */
-
-#define CONFIG_FEC_XCV_TYPE             RGMII
-#define CONFIG_FEC_MXC_PHYADDR          1
-#define FEC_QUIRK_ENET_MAC
-
-#define DWC_NET_PHYADDR			1
-#ifdef CONFIG_DWC_ETH_QOS
-#define CONFIG_SYS_NONCACHED_MEMORY     (1 * SZ_1M)     /* 1M */
+#define CONFIG_ETHPRIME			"eth0" /* Set eqos to primary since we use its MDIO */
+#define CONFIG_FEC_XCV_TYPE		RGMII
+#define PHY_ANEG_TIMEOUT		20000
 #endif
-
-#define PHY_ANEG_TIMEOUT 20000
-
-#endif
-
-#define JAILHOUSE_ENV \
-	"jh_clk= \0 " \
-	"jh_mmcboot=setenv fdt_file imx8mp-evk-root.dtb;" \
-		"setenv jh_clk clk_ignore_unused; " \
-			   "if run loadimage; then " \
-				   "run mmcboot; " \
-			   "else run jh_netboot; fi; \0" \
-	"jh_netboot=setenv fdt_file imx8mp-evk-root.dtb; setenv jh_clk clk_ignore_unused; run netboot; \0 "
-
-#define CONFIG_MFG_ENV_SETTINGS \
-	CONFIG_MFG_ENV_SETTINGS_DEFAULT \
-	"initrd_addr=0x43800000\0" \
-	"initrd_high=0xffffffffffffffff\0" \
-	"emmc_dev=2\0"\
-	"sd_dev=1\0" \
-
 
 #ifdef CONFIG_NAND_BOOT
 #define MFG_NAND_PARTITION "mtdparts=gpmi-nand:64m(nandboot),16m(nandfit),32m(nandkernel),16m(nanddtb),8m(nandtee),-(nandrootfs)"
@@ -103,8 +76,10 @@
 
 #else
 #define CONFIG_EXTRA_ENV_SETTINGS		\
-	CONFIG_MFG_ENV_SETTINGS \
+/*	CONFIG_MFG_ENV_SETTINGS \
 	JAILHOUSE_ENV \
+*/	"eth1addr=f8:dc:7a:5b:87:9d\0" \
+	"ethaddr=f8:dc:7a:5b:87:9c\0" \
 	"script=boot.scr\0" \
 	"image=Image\0" \
 	"splashimage=0x50000000\0" \
@@ -157,20 +132,9 @@
 			"fi; " \
 		"fi;\0"
 
-#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
-/*
-#define CONFIG_BOOTCOMMAND \
-	   "mmc dev ${mmcdev}; if mmc rescan; then " \
-		   "if run loadbootscript; then " \
-			   "run bootscript; " \
-		   "else " \
-			   "if run loadimage; then " \
-				   "run mmcboot; " \
-			   "else run netboot; " \
-			   "fi; " \
-		   "fi; " \
-	   "fi;"
-*/
+//#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x4DA00000 Image.fit; bootm 0x4DA00000"
+#define CONFIG_BOOTCOMMAND "fatload mmc 1 0x40480000 linux; fatload mmc 1 0x43000000 dtb; fatload mmc 1 0x43800000 rootfs; booti 0x40480000 0x43800000 0x43000000"
+
 #endif
 
 /* Link Definitions */

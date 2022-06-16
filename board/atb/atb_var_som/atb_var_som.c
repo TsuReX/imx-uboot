@@ -47,6 +47,7 @@ static void setup_gpmi_nand(void)
 
 int board_early_init_f(void)
 {
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 	struct wdog_regs *wdog = (struct wdog_regs *)WDOG1_BASE_ADDR;
 
 	imx_iomux_v3_setup_multiple_pads(wdog_pads, ARRAY_SIZE(wdog_pads));
@@ -106,63 +107,25 @@ int ft_board_setup(void *blob, bd_t *bd)
 #endif
 
 #ifdef CONFIG_FEC_MXC
-#define FEC_RST_PAD IMX_GPIO_NR(4, 2)
-static iomux_v3_cfg_t const fec1_rst_pads[] = {
-	MX8MP_PAD_SAI1_RXD0__GPIO4_IO02 | MUX_PAD_CTRL(NO_PAD_CTRL),
-};
-
-static void setup_iomux_fec(void)
-{
-	imx_iomux_v3_setup_multiple_pads(fec1_rst_pads,
-					 ARRAY_SIZE(fec1_rst_pads));
-
-	gpio_request(FEC_RST_PAD, "fec1_rst");
-	gpio_direction_output(FEC_RST_PAD, 0);
-	mdelay(15);
-	gpio_direction_output(FEC_RST_PAD, 1);
-	mdelay(100);
-}
-
 static int setup_fec(void)
 {
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 	struct iomuxc_gpr_base_regs *gpr =
 		(struct iomuxc_gpr_base_regs *)IOMUXC_GPR_BASE_ADDR;
-
-	setup_iomux_fec();
 
 	/* Enable RGMII TX clk output */
 	setbits_le32(&gpr->gpr[1], BIT(22));
 
-	//return set_clk_enet(ENET_125MHZ);
 	return 0;
 }
 #endif
 
 #ifdef CONFIG_DWC_ETH_QOS
-
-#define EQOS_RST_PAD IMX_GPIO_NR(4, 22)
-static iomux_v3_cfg_t const eqos_rst_pads[] = {
-	MX8MP_PAD_SAI2_RXC__GPIO4_IO22 | MUX_PAD_CTRL(NO_PAD_CTRL),
-};
-
-static void setup_iomux_eqos(void)
-{
-	imx_iomux_v3_setup_multiple_pads(eqos_rst_pads,
-					 ARRAY_SIZE(eqos_rst_pads));
-
-	gpio_request(EQOS_RST_PAD, "eqos_rst");
-	gpio_direction_output(EQOS_RST_PAD, 0);
-	mdelay(15);
-	gpio_direction_output(EQOS_RST_PAD, 1);
-	mdelay(100);
-}
-
 static int setup_eqos(void)
 {
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 	struct iomuxc_gpr_base_regs *gpr =
 		(struct iomuxc_gpr_base_regs *)IOMUXC_GPR_BASE_ADDR;
-
-	setup_iomux_eqos();
 
 	/* set INTF as RGMII, enable RGMII TXC clock */
 	clrsetbits_le32(&gpr->gpr[1],
@@ -484,6 +447,7 @@ int board_typec_get_mode(int index)
 
 int board_init(void)
 {
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 #ifdef CONFIG_USB_TCPC
 	setup_typec();
 #endif
@@ -514,6 +478,7 @@ int board_init(void)
 
 int board_late_init(void)
 {
+	debug("ATB DEBUG %s():%s:%d\n", __func__, __FILE__, __LINE__);
 #ifdef CONFIG_ENV_IS_IN_MMC
 	board_late_mmc_env_init();
 #endif
